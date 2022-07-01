@@ -1,45 +1,46 @@
 .grid-container {
-    display: grid;
-    // grid-template-columns: auto auto auto;
-    // background-color: #2196F3;
-    padding: 10px;
-  }
+  display: grid;
+  // grid-template-columns: auto auto auto;
+  // background-color: #2196F3;
+  padding: 10px;
+}
+
 .grid-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
 }
 
 .parent-seat {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .seat {
-    padding: 20px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    width: 100px;
-    height: 100px;
-    max-width: 100px;
-    max-height: 100px;
-    border: 1px solid black;
-    vertical-align: middle;
-    align-items: center;
-    text-align: center;
-    color: antiquewhite;
-    font-weight: bold;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 100px;
+  height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  border: 1px solid black;
+  vertical-align: middle;
+  align-items: center;
+  text-align: center;
+  color: antiquewhite;
+  font-weight: bold;
 }
 
 .aisle {
-    background-color: blueviolet;
+  background-color: blueviolet;
 }
 
 .window {
-    background-color: green;
+  background-color: green;
 }
 
 .middle {
-    background-color: red;
+  background-color: red;
 }
