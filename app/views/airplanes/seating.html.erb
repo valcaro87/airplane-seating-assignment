@@ -1,51 +1,38 @@
-prepared_seats: <%= @prepared_seats %>
-<br />
-<br />
 
+<div class="card" style="width: 18rem;">
+  <%= form_tag(airplane_seating_path, {:method => :get}) do %>
+    <div class="mb-3">
+      <label for="seat_array" class="form-label">Column/Rows</label>
+      <input type="text" class="form-control" id="seat_array" name="seat_array">
+      <div class="form-text">A 2D array that represents the columns and rows - [[3,2], [4,3], [2,3], [3,4]]</div>
+    </div>
 
-test: <%= @all_data %>
-<br />
-<br />
+    <div class="mb-3">
+      <label for="no_passengers" class="form-label">Number of passengers</label>
+      <input type="text" class="form-control" id="no_passengers" name="no_passengers">
 
-<%= @aisle %>
-<br />
-<br />
-<%= @windw %>
-<br />
-<br />
-<%= @middlez %>
-<br />
-<br />
+    </div>
 
-<div class="grid-container" style="grid-template-columns: <%= " auto" * @no_groups %>;">
-    <% @prepared_seats.each do |ps| %>
-        <div class="">
-            <% ps.each do |seat| %>
-                <div class="parent-seat">
-                    <% seat.each do |s| %>
-                        <div class="seat <%= @all_data[s][1] %>">
-                            <%= @all_data[s][0].to_i <= @passengers_queue ? @all_data[s][0] : ''  %>
-                        </div>
-                    <% end %>
-                </div>
-            <% end %>
-        </div>
-    <% end %>    
+    <button type="submit" class="btn btn-primary">Submit</button>
+  <% end %>
 </div>
 
-<%# <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
-  </div>
-  <div class="mb-3 form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form> %>
+<hr />
+
+<% if @given_seats.present? && @passengers_queue %>
+  <div class="grid-container" style="grid-template-columns: <%= " auto" * @no_groups %>;">
+    <% @prepared_seats.each do |ps| %>
+      <div class="">
+        <% ps.each do |seat| %>
+          <div class="parent-seat">
+            <% seat.each do |s| %>
+              <div class="seat <%= @all_data[s][1] %>">
+                <%= @all_data[s][0].to_i <= @passengers_queue ? @all_data[s][0] : ''  %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
