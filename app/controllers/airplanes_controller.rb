@@ -1,20 +1,10 @@
 class AirplanesController < ApplicationController
-
+  before_action :validate_2d_array_num_passengers
 
   def seating
-    # given_array =
-    @given_seats = JSON.parse(params[:seat_array])
-    @passengers_queue = params[:no_passengers].to_i
-
-    # given_seats = [[3, 2], [4, 3], [2, 3], [3, 4]]
-    # given_seats = [[3,4], [4,5], [2,3], [3,4]]
-    # given_seats = [[2, 8], [3, 8], [2, 8]]
-    # given_seats = [[2, 8], [3, 8]]
-    if @given_seats.present? && @passengers_queue
-      @no_groups = @given_seats.count
-
-
-      ss = []
+    if @valid_inputs
+      @num_groups = @given_seats.count
+      @prepared_seats = []
 
       @given_seats.each.with_index(1) do |x, i|
         t = x[0] * x[1]
@@ -22,51 +12,64 @@ class AirplanesController < ApplicationController
         (1..t).each do |ps|
           pg << "#{i}-#{ps}"
         end
-        ss << pg.flatten.each_slice(x[0]).to_a
+        @prepared_seats << pg.flatten.each_slice(x[0]).to_a
       end
 
-      @prepared_seats = ss
-      @test = Hash[ss.collect { |x| [x] }]
-
       windw = []
-      windw << ss[0].collect { |r| r[0] }
-      windw << ss[-1].collect { |r| r[-1] }
+      windw << @prepared_seats[0].collect { |r| r[0] }
+      windw << @prepared_seats[-1].collect { |r| r[-1] }
 
       temp_aisle = []
-      ss.each do |gs|
+      @prepared_seats.each do |gs|
         temp_aisle << gs.collect { |r| r[0] }
         temp_aisle << gs.collect { |r| r[-1] }
       end
       aisle = temp_aisle - windw
-      l = aisle.map(&:length).max
-      aisle = aisle.map { |e| e.values_at(0...l) }.transpose.flatten.compact
 
-      # p '----------------------aisle-------------------------'
-      @aisle = Hash[aisle.each.with_index(1).map { |x, i| [x, [i,"aisle"]] }]
-      aisle_last_seat = @aisle.values.last[0]
+      set_aisle = seat_fillers(aisle, 0, "aisle")
+      aisle_last_seat = set_aisle.present? ? set_aisle.values.last[0] : 0
 
-      # p '----------------------windw-------------------------'
-      l = windw.map(&:length).max
-      windw = windw.map { |e| e.values_at(0...l) }.transpose.flatten.compact
-      @windw = Hash[windw.each.with_index(aisle_last_seat + 1).map { |x, i| [x, [i, "window"]] }]
-      windw_last_seat = @windw.values.last[0]
+      set_window = seat_fillers(windw, aisle_last_seat, "window")
+      windw_last_seat = set_window.values.last[0]
 
-      middlez = []
-      ss.each.with_index do |gs, i|
+      middle = []
+      @prepared_seats.each.with_index do |gs, i|
         pq = (1..@given_seats[i][0]).to_a[1...-1]
         if pq.size > 0
           pq.each do |rz|
-            middlez << gs.collect { |r| r[rz - 1] }
+            middle << gs.collect { |r| r[rz - 1] }
           end
         end
       end
 
-      l = middlez.map(&:length).max
-      middlez = middlez.map { |e| e.values_at(0...l) }.transpose.flatten.compact
-      @middlez = Hash[middlez.each.with_index(windw_last_seat + 1).map { |x, i| [x, [i, "middle"]] }]
+      set_middle = seat_fillers(middle, windw_last_seat, "middle")
 
-      @all_data = [*@aisle,*@windw,*@middlez].to_h
+      @all_data = [*set_aisle,*set_window,*set_middle].to_h
     end
+  end
+
+  private
+
+  def validate_2d_array_num_passengers
+    begin
+      arr = JSON.parse(params[:seat_array])
+      no_passengers = Integer(params[:no_passengers]) rescue 0
+      if arr.all? { |e| e.class==Array } && arr.map(&:size).uniq.size == 1 && no_passengers > 0
+        @passengers_queue = no_passengers.to_i
+        @given_seats = arr
+        @valid_inputs = true
+      else
+        @valid_inputs = false
+      end
+    rescue
+      @valid_inputs = false
+    end
+  end
+
+  def seat_fillers(fill, last_seat = 0, description)
+    last_val = fill.map(&:length).max
+    fill = fill.map { |e| e.values_at(0...last_val) }.transpose.flatten.compact
+    Hash[fill.each.with_index(last_seat + 1).map { |x, i| [x, [i,"#{description}"]] }]
   end
 
 end

@@ -2,14 +2,18 @@
 <div class="card" style="width: 18rem;">
   <%= form_tag(airplane_seating_path, {:method => :get}) do %>
     <div class="mb-3">
-      <label for="seat_array" class="form-label">Column/Rows</label>
-      <input type="text" class="form-control" id="seat_array" name="seat_array">
-      <div class="form-text">A 2D array that represents the columns and rows - [[3,2], [4,3], [2,3], [3,4]]</div>
+      <label for="seat_array" class="form-label">Column/Rows:</label>
+      <div class="form-text">A 2D array that represents the columns and rows, example:</div>
+      <div class="form-text">[[3,2], [4,3], [2,3], [3,4]]</div>
+      <div class="form-text">[[3,4], [4,5], [2,3], [3,4]]</div>
+      <div class="form-text">[[2, 8], [3, 8]]</div>
+      <div class="form-text">[[2, 8], [3, 8], [2, 8]]</div>
+      <input type="text" class="form-control" id="seat_array" name="seat_array" value="<%=params[:seat_array]%>">
     </div>
 
     <div class="mb-3">
-      <label for="no_passengers" class="form-label">Number of passengers</label>
-      <input type="text" class="form-control" id="no_passengers" name="no_passengers">
+      <label for="no_passengers" class="form-label">Number of passengers:</label>
+      <input type="text" class="form-control" id="no_passengers" name="no_passengers" value="<%=params[:no_passengers]%>">
 
     </div>
 
@@ -19,8 +23,8 @@
 
 <hr />
 
-<% if @given_seats.present? && @passengers_queue %>
-  <div class="grid-container" style="grid-template-columns: <%= " auto" * @no_groups %>;">
+<% if @valid_inputs %>
+  <div class="grid-container" style="grid-template-columns: <%= " auto" * @num_groups %>;">
     <% @prepared_seats.each do |ps| %>
       <div class="">
         <% ps.each do |seat| %>
@@ -34,5 +38,9 @@
         <% end %>
       </div>
     <% end %>
-  <% end %>
-</div>
+  </div>
+
+<% else %>
+  <p> invalid data format </p>
+<% end %>
+
