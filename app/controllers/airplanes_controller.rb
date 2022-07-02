@@ -43,7 +43,7 @@ class AirplanesController < ApplicationController
       end
 
       set_middle = seat_fillers(middle, windw_last_seat, "middle")
-
+      flash[:alert] = []
       @all_data = [*set_aisle,*set_window,*set_middle].to_h
     end
   end
@@ -51,6 +51,7 @@ class AirplanesController < ApplicationController
   private
 
   def validate_2d_array_num_passengers
+    flash[:alert] = []
     begin
       arr = JSON.parse(params[:seat_array])
       no_passengers = Integer(params[:no_passengers]) rescue 0
@@ -59,9 +60,12 @@ class AirplanesController < ApplicationController
         @given_seats = arr
         @valid_inputs = true
       else
+        flash[:alert] << "Please provide a valid 2D array"
         @valid_inputs = false
       end
     rescue
+      flash[:alert] << "testing"
+      flash[:alert] << "Please provide a valid 2D array"
       @valid_inputs = false
     end
   end

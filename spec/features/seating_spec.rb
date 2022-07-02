@@ -1,4 +1,3 @@
-
 require 'rails_helper'
 
 describe "User submit inputs", type: :feature do

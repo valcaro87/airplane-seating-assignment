@@ -19,6 +19,15 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
   <% end %>
+
+  <% if flash.alert.any? %>
+    <ul>
+      <% flash.alert.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
 </div>
 
 <hr />
@@ -40,8 +49,5 @@
       </div>
     <% end %>
   </div>
-
-<% else %>
-  <p> invalid data format </p>
 <% end %>
 
