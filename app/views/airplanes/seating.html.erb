@@ -33,7 +33,7 @@
 <hr />
 
 <% if @valid_inputs %>
-  <p>airplane seats generated</p>
+  <h2 class="seats-generated">Airplane seats generated</h2>
   <div class="grid-container" style="grid-template-columns: <%= " auto" * @num_groups %>;">
     <% @prepared_seats.each do |ps| %>
       <div class="">

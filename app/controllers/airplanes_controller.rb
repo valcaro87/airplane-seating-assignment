@@ -43,7 +43,7 @@ class AirplanesController < ApplicationController
       end
 
       set_middle = seat_fillers(middle, windw_last_seat, "middle")
-      flash[:alert] = []
+
       @all_data = [*set_aisle,*set_window,*set_middle].to_h
     end
   end
@@ -56,16 +56,25 @@ class AirplanesController < ApplicationController
       arr = JSON.parse(params[:seat_array])
       no_passengers = Integer(params[:no_passengers]) rescue 0
       if arr.all? { |e| e.class==Array } && arr.map(&:size).uniq.size == 1 && no_passengers > 0
-        @passengers_queue = no_passengers.to_i
-        @given_seats = arr
-        @valid_inputs = true
+
+        max_seats = (arr.map { |x| x.inject(:*)}).sum
+        if arr.flatten.chunk(&:zero?).count(&:first)> 0
+          flash[:alert] << "A 2D array should not contain any zero's"
+          @valid_inputs = false
+        elsif no_passengers > max_seats
+          flash[:alert] << "Number of passengers allowed capacity should be #{max_seats}"
+          @valid_inputs = false
+        else
+          @passengers_queue = no_passengers.to_i
+          @given_seats = arr
+          @valid_inputs = true
+        end
       else
-        flash[:alert] << "Please provide a valid 2D array"
+        flash[:alert] << "Please provide a valid 2D array and Number of passengers"
         @valid_inputs = false
       end
     rescue
-      flash[:alert] << "testing"
-      flash[:alert] << "Please provide a valid 2D array"
+      flash[:alert] << "Please provide a valid 2D array and Number of passengers"
       @valid_inputs = false
     end
   end
