@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  #resources :airplanes
+  root to: 'airplanes#seating'
 
   get 'airplane/seating', to: 'airplanes#seating'
 end

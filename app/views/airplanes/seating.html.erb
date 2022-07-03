@@ -19,11 +19,21 @@
 
     <button type="submit" class="btn btn-primary">Submit</button>
   <% end %>
+
+  <% if flash.alert.any? %>
+    <ul>
+      <% flash.alert.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
 </div>
 
 <hr />
 
 <% if @valid_inputs %>
+  <h2 class="seats-generated">Airplane seats generated</h2>
   <div class="grid-container" style="grid-template-columns: <%= " auto" * @num_groups %>;">
     <% @prepared_seats.each do |ps| %>
       <div class="">
@@ -39,8 +49,5 @@
       </div>
     <% end %>
   </div>
-
-<% else %>
-  <p> invalid data format </p>
 <% end %>
 
