@@ -26,3 +26,6 @@ If there were 30 passengers from then the seating output will be:
 
 1. Programmed using Ruby on Rails
 2. Rspec Acceptance Test cases
+
+**Notes:**
+Deployed in Heroku Server: https://airplane-seating-algorithm.herokuapp.com/
