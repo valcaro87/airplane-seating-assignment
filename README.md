@@ -1,25 +1,28 @@
-# README
+# Airplane Seating Algorithm
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+I wrote a program that helps seat audiences in a flight based on the following input and rules.
 
-Things you may want to cover:
+**Rules for seating**
 
-* Ruby version
+1. Always seat passengers starting from the front row to back, starting from the left to the right.
+2. Fill aisle seats first followed, window seats second, and center seats as last.
 
-* System dependencies
+**Input to the program will be**
 
-* Configuration
+1. A 2D array that represents the columns and rows - Ex. [[3,4], [4,5], [2,3], [3,4]]
+2. Number of passengers waiting in the queue.
 
-* Database creation
+**Example**
 
-* Database initialization
+Given - A 2D array that represents the columns and rows - [[3,2], [4,3], [2,3], [3,4]]
 
-* How to run the test suite
+![Alt text](/public/images/ex1.png "Example output")
 
-* Services (job queues, cache servers, search engines, etc.)
+If there were 30 passengers from then the seating output will be:
 
-* Deployment instructions
+![Alt text](/public/images/ex2.png "Example output")
 
-* ...
-# airplane-seating-assignment
+**Notes:**
+
+1. Programmed using Ruby on Rails
+2. Rspec Acceptance Test cases
