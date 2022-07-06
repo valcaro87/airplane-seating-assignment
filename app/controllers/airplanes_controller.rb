@@ -16,21 +16,21 @@ class AirplanesController < ApplicationController
       end
 
       windw = []
-      windw << @prepared_seats[0].collect { |r| r[0] }
-      windw << @prepared_seats[-1].collect { |r| r[-1] }
+      windw << @prepared_seats[0].collect { |r| r[0] } if @given_seats.first.first.to_i > 1
+      windw << @prepared_seats[-1].collect { |r| r[-1] } if @given_seats.last.first.to_i > 1
 
       temp_aisle = []
       @prepared_seats.each do |gs|
         temp_aisle << gs.collect { |r| r[0] }
         temp_aisle << gs.collect { |r| r[-1] }
       end
-      aisle = temp_aisle - windw
+      aisle = temp_aisle.uniq - windw.uniq
 
       set_aisle = seat_fillers(aisle, 0, "aisle")
       aisle_last_seat = set_aisle.present? ? set_aisle.values.last[0] : 0
 
       set_window = seat_fillers(windw, aisle_last_seat, "window")
-      windw_last_seat = set_window.values.last[0]
+      windw_last_seat = set_window.present? ? set_window.values.last[0] : 0
 
       middle = []
       @prepared_seats.each.with_index do |gs, i|
