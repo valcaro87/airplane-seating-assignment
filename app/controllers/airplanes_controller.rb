@@ -30,7 +30,7 @@ class AirplanesController < ApplicationController
       aisle_last_seat = set_aisle.present? ? set_aisle.values.last[0] : 0
 
       set_window = seat_fillers(windw, aisle_last_seat, "window")
-      windw_last_seat = set_window.present? ? set_window.values.last[0] : 0
+      windw_last_seat = set_window.present? ? set_window.values.last[0] : aisle_last_seat
 
       middle = []
       @prepared_seats.each.with_index do |gs, i|
