@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+<h1>seatings</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Given Seats</th>
+      <th>Passengers</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @seatings.each do |seating| %>
+      <tr>
+        <td><%= seating.given_seats %></td>
+        <td><%= seating.passengers %></td>
+        <td><%= link_to 'Show', seating %></td>
+        <td><%= link_to 'Edit', edit_seating_path(seating) %></td>
+        <td><%= link_to 'Destroy', seating, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New seating', new_seating_path %>
