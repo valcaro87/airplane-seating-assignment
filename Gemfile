@@ -34,6 +34,13 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
   gem 'capybara', '>= 3.26'
+  gem 'cucumber-rails', require: false
+
+  gem 'selenium-webdriver'
+  gem 'minitest'
+  gem 'shoulda-matchers', '~> 5.1'
+  # gem 'faker', '~> 1.6', '>= 1.6.6'
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
 end
 
 group :development do
@@ -50,7 +57,7 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   # gem 'capybara', '>= 3.26'
-  gem 'selenium-webdriver', '>= 4.0.0.rc1'
+  # gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end

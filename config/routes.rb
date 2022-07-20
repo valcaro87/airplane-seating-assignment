@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  root to: 'airplanes#seating'
+  root to: 'airplanes#index'
 
   resources :airplanes # do
     # resources :seatings

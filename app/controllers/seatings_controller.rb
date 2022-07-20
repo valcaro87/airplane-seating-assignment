@@ -21,11 +21,15 @@ class SeatingsController < ApplicationController
 
   # POST /seatings or /seatings.json
   def create
-    @seating = Seating.new(seating_params)
+
+    # @seating = Seating.new(seating_params)
+    airplane = Airplane.first
+    @seating = airplane.seatings.new(seating_params)
 
     respond_to do |format|
       if @seating.save
-        format.html { redirect_to seating_url(@seating), notice: "seating was successfully created." }
+        # format.html { redirect_to seating_url(@seating), notice: "seating was successfully created." }
+        format.html { redirect_to seatings_url, notice: "seating was successfully created." }
         format.json { render :show, status: :created, location: @seating }
       else
         format.html { render :new, status: :unprocessable_entity }
